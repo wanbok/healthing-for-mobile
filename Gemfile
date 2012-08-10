@@ -39,3 +39,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 
 gem 'paperclip'
+
+gem "mongoid", "~> 3.0"
+gem "bson_ext", "~> 1.5"
+gem "mongoid-paperclip", :require => "mongoid_paperclip"

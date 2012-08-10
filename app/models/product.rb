@@ -1,42 +1,17 @@
-class Product < ActiveRecord::Base
-	attr_accessible :name, :price, :hospital_id
+class Product
+	include Mongoid::Document
+	belongs_to :hospital
+	embeds_many :photos
 
-	belongs_to :hospital, :class_name => "Hospital", :foreign_key => "hospital_id"
-	has_many :photos, :class_name => "Photo", :foreign_key => "product_id", :dependent => :destroy
+	field :name, type: String
+	field :price, type: Integer
+	field :dc_rate, type: Float
+	field :event_start_at, type: DateTime
+	field :event_end_at, type: DateTime
+	field :event_state, type: String
+
+	attr_accessible :name, :price
 
 	accepts_nested_attributes_for :photos
 
-	def as_json(options={})
-		super(
-			{
-				except: :hospital_id,
-				include: [
-					{
-						hospital: {
-							include: [
-								{
-									photos: {
-										only:[],
-										methods:[
-											:image_url,
-											:medium_url,
-											:thumb_url
-										]
-									}
-								}
-							]
-						}
-					},
-					{
-						photos: {
-							only:[],
-							methods: [
-								:image_url, :medium_url, :thumb_url
-							]
-						}
-					}
-				]
-			}.merge(options)
-		)
-	end
 end

@@ -1,26 +1,25 @@
-class Hospital < ActiveRecord::Base
-  attr_accessible :photos_attributes, :detail, :location_area, :location_city, :location_latitude, :location_logitude, :name
+class Hospital
+	include Mongoid::Document
+	has_many :products, dependent: :destroy
+	embeds_many :photos
 
-	has_many :products, :dependent => :destroy#, :order => 'created_at desc'
-	has_many :photos, :dependent => :destroy#, :order => 'created_at desc'
+	field :name, type: String
+	field :location_city, type: String
+	field :location_area, type: String
+	field :location_latitude, type: String
+	field :location_logitude, type: String
+	field :tel_number, type: String
+	field :department, type: String
+	field :detail, type: String
 
-	accepts_nested_attributes_for :photos, :reject_if => proc { |e| e['image'].blank? }, :allow_destroy => true
+  attr_accessible	:name, :detail, :department, :tel_number, :photos_attributes,
+  	:location_area, :location_city, :location_latitude, :location_logitude
 
-	def as_json(options={})
-		super(
-			{
-				include: [
-					{
-						photos: {
-							only:[],
-							methods:[
-								:image_url,
-								:medium_url,
-								:thumb_url
-							]
-						}
-					}
-				]
-			}.merge(options))
-	end
+	accepts_nested_attributes_for :products,
+		reject_if: :all_blank,
+		allow_destroy: true
+	accepts_nested_attributes_for :photos,
+		reject_if: ->(attr){ attr[:image].blank? },
+		allow_destroy: true
+
 end
