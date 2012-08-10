@@ -1,0 +1,47 @@
+<%= form_for @hospital, :html => { :multipart => true } do |f| %>
+  <% if @hospital.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hospital.errors.count, "error") %> prohibited this hospital from being saved:</h2>
+
+      <ul>
+      <% @hospital.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :location_city %><br />
+    <%= f.text_field :location_city %>
+  </div>
+  <div class="field">
+    <%= f.label :location_area %><br />
+    <%= f.text_field :location_area %>
+  </div>
+  <div class="field">
+    <%= f.label :location_logitude %><br />
+    <%= f.text_field :location_logitude %>
+  </div>
+  <div class="field">
+    <%= f.label :location_latitude %><br />
+    <%= f.text_field :location_latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :detail %><br />
+    <%= f.text_area :detail %>
+  </div>
+  <div class="images">
+    <%= f.fields_for :photos do |builder| %>
+      <%= render 'photos/photo_fields', :f => builder %>
+    <% end %>
+  <p> <%= link_to_add_fields "Add Image", f, :photos %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
