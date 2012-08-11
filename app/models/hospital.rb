@@ -1,18 +1,19 @@
 class Hospital
 	include Mongoid::Document
+
 	has_many :products, dependent: :destroy
-	embeds_many :photos
+	has_many :photos, dependent: :destroy
 
 	field :name, type: String
 	field :location_city, type: String
 	field :location_area, type: String
-	field :location_latitude, type: String
-	field :location_logitude, type: String
+	field :location_latitude, type: Float
+	field :location_logitude, type: Float
 	field :tel_number, type: String
 	field :department, type: String
 	field :detail, type: String
 
-  attr_accessible	:name, :detail, :department, :tel_number, :photos_attributes,
+  attr_accessible	:photos_attributes, :name, :detail, :department, :tel_number,
   	:location_area, :location_city, :location_latitude, :location_logitude
 
 	accepts_nested_attributes_for :products,

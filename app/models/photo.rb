@@ -1,13 +1,16 @@
 class Photo
-  include Mongoid::Document
+	include Mongoid::Document
   include Mongoid::Paperclip
 
 	belongs_to :hospital
   belongs_to :product
-  
-  has_mongoid_attached_file :image,
-    styles: { medium: "300x300>", thumb: "100x100>" }
 
+  has_mongoid_attached_file :image,
+    styles: {
+      medium: ["300x300>", :png],
+      thumb: ["100x100>", :png]
+    }
+    
   validates_attachment :image, 
   	presence: true,
   	content_type: { content_type: ["image/png", "image/jpeg"] },
@@ -24,4 +27,5 @@ class Photo
   def thumb_url
   	image.url(:thumb)
 	end
+
 end

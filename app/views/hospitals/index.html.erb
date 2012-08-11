@@ -7,6 +7,8 @@
     <th>Location area</th>
     <th>Location logitude</th>
     <th>Location latitude</th>
+    <th>Tel Number</th>
+    <th>Department</th>
     <th>Detail</th>
     <th></th>
     <th></th>
@@ -15,11 +17,14 @@
 
 <% @hospitals.each do |hospital| %>
   <tr>
+    <td><%= image_tag hospital.photos[0].thumb_url %></td>
     <td><%= hospital.name %></td>
     <td><%= hospital.location_city %></td>
     <td><%= hospital.location_area %></td>
     <td><%= hospital.location_logitude %></td>
     <td><%= hospital.location_latitude %></td>
+    <td><%= hospital.tel_number %></td>
+    <td><%= hospital.department %></td>
     <td><%= hospital.detail %></td>
     <td><%= link_to 'Show', hospital %></td>
     <td><%= link_to 'Edit', edit_hospital_path(hospital) %></td>

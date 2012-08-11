@@ -26,9 +26,25 @@
 </p>
 
 <p>
+  <b>Tel number:</b>
+  <%= @hospital.tel_number %>
+</p>
+
+<p>
+  <b>Department:</b>
+  <%= @hospital.department %>
+</p>
+
+<p>
   <b>Detail:</b>
   <%= @hospital.detail %>
 </p>
+
+<% @hospital.photos.each do |photo| %>
+  <p>
+    <%= image_tag photo.medium_url %>
+  </p>
+<% end %>
 
 
 <%= link_to 'Edit', edit_hospital_path(@hospital) %> |

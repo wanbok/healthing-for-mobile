@@ -16,3 +16,4 @@
 
 # Ignore all images
 /app/assets/photos
+/public/assets/photos

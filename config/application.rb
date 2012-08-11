@@ -68,9 +68,9 @@ module HospitalAggregator
 
     # Paperclip configuration
     # config.paperclip_defaults = {:storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public"}, :fog_directory => "", :fog_host => "localhost"}
-    config.paperclip_defaults = {:url => '/:class/:id/:style.:extension', :path => ':rails_root/app/assets/:class/:id_partition/:style.:extension'}
-
-    # Mongoid configuration
-    Mongoid.logger.level = Logger::DEBUG
+    config.paperclip_defaults = {
+        url: '/:class/:id/:style.:extension',
+        path: ':rails_root/public/assets/:class/:id_partition/:style.:extension'
+    }
   end
 end

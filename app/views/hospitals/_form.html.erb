@@ -11,6 +11,17 @@
     </div>
   <% end %>
 
+<!--
+  field :name, type: String
+  field :location_city, type: String
+  field :location_area, type: String
+  field :location_latitude, type: Float
+  field :location_logitude, type: Float
+  field :tel_number, type: String
+  field :department, type: String
+  field :detail, type: String
+-->
+
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -30,6 +41,14 @@
   <div class="field">
     <%= f.label :location_latitude %><br />
     <%= f.text_field :location_latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :tel_number %><br />
+    <%= f.telephone_field :tel_number %>
+  </div>
+  <div class="field">
+    <%= f.label :department %><br />
+    <%= f.text_field :department %>
   </div>
   <div class="field">
     <%= f.label :detail %><br />
