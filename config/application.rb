@@ -73,5 +73,8 @@ module HospitalAggregator
         url: '/:class/:id/:style.:extension',
         path: ':rails_root/public/assets/:class/:id_partition/:style.:extension'
     }
+
+    # Mongoid configuration
+    Mongoid.load!(":rails_root/config/mongoid.yml", :production)
   end
 end
