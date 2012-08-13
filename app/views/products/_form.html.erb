@@ -28,7 +28,7 @@ $(function() {
 
   <div class="field">
     <%= f.label :hospital_id %><br />
-    <%= f.collection_select :hospital, Hospital.all, :id, :name, :prompt => "Select something" %>
+    <%= f.collection_select :hospital_id, Hospital.all, :id, :name, :prompt => "Select something" %>
   </div>
   <div class="field">
     <%= f.label :name %><br />

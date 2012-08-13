@@ -6,16 +6,17 @@ class ProductsController < ApplicationController
       @products = Product.all
     else
       if params[:section] == "today"
-        @products = Product.where(:event_start_at => Date.today..(Date.today + 1))
+        @products = Product.where("event_start_at >= ? AND event_start_at < ?", Date.today, (Date.today + 1))
       # else if params[:section] == "not_today"
       else
-        @products = Product.where(:event_start_at.gte => (Date.today + 1))
+        @products = Product.where("event_start_at >= ?", (Date.today + 1))
       end
     end
 
     unless params[:department].blank?
       hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
-      @products = @products.in(hospital_id: hospital_ids)
+      tmp_products = Product.where(hospital_id: hospital_ids)
+      @products &= tmp_products
     end
 
     unless params[:udid].blank?
@@ -53,7 +54,8 @@ class ProductsController < ApplicationController
     end
 
     if @product
-      @product.inc(:read_count, 1)
+      @product.read_count = @product.read_count.nil? ? 0 : @product.read_count + 1
+      @product.save
     end
 
     respond_to do |format|
