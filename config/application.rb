@@ -66,11 +66,15 @@ module HospitalAggregator
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.time_zone = 'Seoul'
     # Paperclip configuration
     # config.paperclip_defaults = {:storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public"}, :fog_directory => "", :fog_host => "localhost"}
     config.paperclip_defaults = {
         url: '/:class/:id/:style.:extension',
         path: ':rails_root/public/assets/:class/:id_partition/:style.:extension'
     }
+
+    # Mongoid configuration
+    Mongoid.raise_not_found_error = false
   end
 end

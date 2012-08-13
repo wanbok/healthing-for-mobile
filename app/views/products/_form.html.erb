@@ -1,3 +1,10 @@
+<script type="text/javascript">
+$(function() {
+  $("#product_event_start_at").datepicker({ dateFormat: "yy-mm-dd" });
+  $("#product_event_end_at").datepicker({ dateFormat: "yy-mm-dd" });
+});
+</script>
+
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
     <div id="error_explanation">
@@ -11,9 +18,17 @@
     </div>
   <% end %>
 
+<!-- 
+  field :name, type: String
+  field :price, type: Integer
+  field :dc_rate, type: Float
+  field :event_start_at, type: DateTime
+  field :event_end_at, type: DateTime
+-->
+
   <div class="field">
     <%= f.label :hospital_id %><br />
-    <%= f.text_field :hospital_id %>
+    <%= f.collection_select :hospital, Hospital.all, :id, :name, :prompt => "Select something" %>
   </div>
   <div class="field">
     <%= f.label :name %><br />
@@ -22,6 +37,24 @@
   <div class="field">
     <%= f.label :price %><br />
     <%= f.number_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :dc_rate %><br />
+    <%= f.text_field :dc_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :event_start_at %><br />
+    <%= f.text_field :event_start_at %>
+  </div>
+  <div class="field">
+    <%= f.label :event_end_at %><br />
+    <%= f.text_field :event_end_at %>
+  </div>
+  <div class="images">
+    <%= f.fields_for :photos do |builder| %>
+      <%= render 'photos/photo_fields', :f => builder %>
+    <% end %>
+  <p> <%= link_to_add_fields "Add Image", f, :photos %>
   </div>
   <div class="actions">
     <%= f.submit %>

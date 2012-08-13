@@ -2,10 +2,20 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    if params[:hospital_id].blank?
+    if params[:section].blank?
       @products = Product.all
     else
-      @products = Product.find(:all, :conditions => ['hospital_id = ?', params[:hospital_id]])
+      if params[:section] == "today"
+        @products = Product.where(:event_start_at.lt => (Date.today + 1))
+      # else if params[:section] == "not_today"
+      else
+        @products = Product.where(:event_start_at.gte => (Date.today + 1))
+      end
+    end
+
+    unless params[:department].blank?
+      hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
+      @products = @products.in(hospital_id: hospital_ids)
     end
 
     respond_to do |format|
@@ -18,10 +28,29 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product = Product.find(params[:id])
+    if @product
+      @product.inc(:read_count, 1)
+    end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @product, include: [{photos: {only:[], methods:[:image_url, :medium_url, :thumb_url]}}] }
+      format.json { render json: @product }
+    end
+  end
+
+  # POST /products/1
+  # POST /products/1.json
+  def favorite
+    @product = Product.find(params[:id])
+
+    respond_to do |format|
+      if @product.favorite(params[:udid])
+        format.html { redirect_to @product, notice: 'Favorite was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
     end
   end
 

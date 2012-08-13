@@ -1,6 +1,10 @@
 HospitalAggregator::Application.routes.draw do
 
-  resources :products
+  resources :products do
+    member do
+      post 'favorite'
+    end
+  end
 
   resources :hospitals do
     resources :products

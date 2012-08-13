@@ -23,4 +23,19 @@ class Hospital
 		reject_if: ->(attr){ attr[:image].blank? },
 		allow_destroy: true
 
+	def as_json(options={})
+		super(
+			include:
+			{
+				photos: {
+					only: [:_id],
+					methods:[
+						:image_url,
+						:medium_url,
+						:thumb_url
+					]
+				}
+			}.merge(options)
+		)
+	end
 end
