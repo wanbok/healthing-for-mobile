@@ -52,12 +52,13 @@ class Product
 		)
 	end
 
-	def favorite(udid)
-		unless self.users.where(udid: udid).blank?
-			return false
-		else
+	def favorite_toggle(udid)
+		if self.users.where(udid: udid).blank?
 			self.users.create(udid: udid)
 			self.inc(:favorite_count, 1)
+		else
+			self.users.delete(udid: udid)
+			self.inc(:favorite_count, -1)
 		end
 	end
 

@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
         @products = Product.where(:event_start_at => Date.today..(Date.today + 1))
       # else if params[:section] == "not_today"
       else
-        @products = Product.where(:event_start_at.lte => (Date.today + 1))
+        @products = Product.where(:event_start_at.gte => (Date.today + 1))
       end
     end
 
@@ -68,11 +68,11 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
 
     respond_to do |format|
-      if @product.favorite(params[:udid])
+      if @product.favorite_toggle(params[:udid])
         format.html { redirect_to @product, notice: 'Favorite was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @product.favorite_count, status: :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "show" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
