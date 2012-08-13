@@ -75,6 +75,6 @@ module HospitalAggregator
     }
 
     # Mongoid configuration
-    Mongoid.load!(":rails_root/config/mongoid.yml", :production)
+    Mongoid.load!('config/mongoid.yml', :production)
   end
 end
