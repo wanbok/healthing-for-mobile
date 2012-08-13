@@ -3,7 +3,7 @@ class Product
 
 	belongs_to :hospital
 	has_many :photos, dependent: :destroy
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :users, dependent: :delete
 	
 	field :name, type: String
 	field :price, type: Integer

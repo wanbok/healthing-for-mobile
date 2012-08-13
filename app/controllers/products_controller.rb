@@ -6,16 +6,31 @@ class ProductsController < ApplicationController
       @products = Product.all
     else
       if params[:section] == "today"
-        @products = Product.where(:event_start_at.lt => (Date.today + 1))
+        @products = Product.where(:event_start_at => Date.today..(Date.today + 1))
       # else if params[:section] == "not_today"
       else
-        @products = Product.where(:event_start_at.gte => (Date.today + 1))
+        @products = Product.where(:event_start_at.lte => (Date.today + 1))
       end
     end
 
     unless params[:department].blank?
       hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
       @products = @products.in(hospital_id: hospital_ids)
+    end
+
+    unless params[:udid].blank?
+      if user = User.where(udid: params[:udid]).first
+        favorite_ids = user.products.map(&:_id)
+        tmp_products = @products
+        @products = tmp_products.map do |p|
+          if favorite_ids.include?(p._id)
+            p[:favorited] = true
+            p
+          else
+            p
+          end
+        end
+      end
     end
 
     respond_to do |format|
@@ -28,6 +43,15 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product = Product.find(params[:id])
+    unless params[:udid].blank?
+      if user = User.where(udid: params[:udid]).first
+        favorite_ids = user.products.map(&:_id)
+        if favorite_ids.include?(@product._id)
+          @product[:favorited] = true
+        end
+      end
+    end
+
     if @product
       @product.inc(:read_count, 1)
     end
@@ -38,8 +62,8 @@ class ProductsController < ApplicationController
     end
   end
 
-  # POST /products/1
-  # POST /products/1.json
+  # POST /products/1/favorite
+  # POST /products/1/favorite.json
   def favorite
     @product = Product.find(params[:id])
 
