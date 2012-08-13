@@ -3,7 +3,7 @@ class Product
 
 	belongs_to :hospital
 	has_many :photos, dependent: :destroy
-  has_and_belongs_to_many :users, dependent: :delete
+  has_and_belongs_to_many :users
 	
 	field :name, type: String
 	field :price, type: Integer
@@ -53,11 +53,14 @@ class Product
 	end
 
 	def favorite_toggle(udid)
-		if self.users.where(udid: udid).blank?
-			self.users.create(udid: udid)
+		user = self.users.where(udid: udid).first
+		if user.blank?
+			self.users.push User.find_or_create_by(udid: udid)
 			self.inc(:favorite_count, 1)
 		else
-			self.users.delete(udid: udid)
+			self.user_ids.delete(user._id)
+			User.find(user._id).product_ids.delete(self._id)
+			self.save
 			self.inc(:favorite_count, -1)
 		end
 	end
