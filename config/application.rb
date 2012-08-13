@@ -73,8 +73,5 @@ module HospitalAggregator
         url: '/:class/:id/:style.:extension',
         path: ':rails_root/public/assets/:class/:id_partition/:style.:extension'
     }
-
-    # Mongoid configuration
-    Mongoid.raise_not_found_error = false
   end
 end
