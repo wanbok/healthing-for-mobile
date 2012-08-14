@@ -40,6 +40,7 @@ gem 'jquery-rails'
 
 gem 'paperclip'
 
+gem 'mysql2'
 # gem "mongoid", "~> 3.0"
 # gem "bson_ext", "~> 1.5"
 # gem "mongoid-paperclip", :require => "mongoid_paperclip"
