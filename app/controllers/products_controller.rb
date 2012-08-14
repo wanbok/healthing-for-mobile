@@ -1,15 +1,20 @@
 class ProductsController < ApplicationController
+  def date_to_datetime(day)
+    DateTime.civil(day.year, day.month, day.day, 0, 0, 0, Rational(3,8))
+  end
   # GET /products
   # GET /products.json
   def index
     if params[:section].blank?
       @products = Product.all
     else
+        today_as_datetime = date_to_datetime(Date.today)
+        tommorow_as_datetime = date_to_datetime(Date.today + 1)
       if params[:section] == "today"
-        @products = Product.where("event_start_at >= ? AND event_start_at < ?", Date.today, (Date.today + 1))
+        @products = Product.where(event_start_at: today_as_datetime...tommorow_as_datetime)
       # else if params[:section] == "not_today"
       else
-        @products = Product.where("event_start_at >= ?", (Date.today + 1))
+        @products = Product.where("products.event_start_at < ?", today_as_datetime)
       end
     end
 
