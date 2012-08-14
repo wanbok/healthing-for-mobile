@@ -2,6 +2,31 @@ class ProductsController < ApplicationController
   def date_to_datetime(day)
     DateTime.civil(day.year, day.month, day.day, 0, 0, 0, Rational(3,8))
   end
+
+  # GET /products/favorites
+  # GET /products/favorites.json
+  def favorites
+    @products = Product.all
+    unless params[:udid].blank?
+      if user = User.where(udid: params[:udid]).first
+        favorite_ids = user.products.map(&:_id)
+        tmp_products = @products
+        @products = tmp_products.map do |p|
+          if favorite_ids.include?(p._id)
+            p[:favorited] = true
+            p
+          end
+        end
+        @products.compact!
+      end
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @products }
+    end
+  end
+
   # GET /products
   # GET /products.json
   def index

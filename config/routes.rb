@@ -4,6 +4,9 @@ HospitalAggregator::Application.routes.draw do
     member do
       post 'favorite'
     end
+    collection do
+      get 'favorites'
+    end
   end
 
   resources :hospitals do
