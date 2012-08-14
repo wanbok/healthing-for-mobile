@@ -20,6 +20,12 @@ class ProductsController < ApplicationController
         @products.compact!
       end
     end
+    
+    unless params[:department].blank?
+      hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
+      tmp_products = Product.where(hospital_id: hospital_ids)
+      @products &= tmp_products
+    end
 
     respond_to do |format|
       format.html # index.html.erb
