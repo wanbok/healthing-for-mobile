@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_filter :authorize, :except => [:index, :show, :favorites, :favorite]
+
   def date_to_datetime(day)
     DateTime.civil(day.year, day.month, day.day, 0, 0, 0, Rational(3,8))
   end
@@ -30,6 +32,22 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
+    end
+  end
+
+  # POST /products/1/favorite
+  # POST /products/1/favorite.json
+  def favorite
+    @product = Product.find(params[:id])
+
+    respond_to do |format|
+      if @product.favorite_toggle(params[:udid])
+        format.html { redirect_to @product, notice: 'Favorite was successfully updated.' }
+        format.json { render json: {favorite_count: @product.favorite_count}, status: :ok }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -100,26 +118,11 @@ class ProductsController < ApplicationController
     end
   end
 
-  # POST /products/1/favorite
-  # POST /products/1/favorite.json
-  def favorite
-    @product = Product.find(params[:id])
-
-    respond_to do |format|
-      if @product.favorite_toggle(params[:udid])
-        format.html { redirect_to @product, notice: 'Favorite was successfully updated.' }
-        format.json { render json: @product.favorite_count, status: :ok }
-      else
-        format.html { render action: "show" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # GET /products/new
   # GET /products/new.json
   def new
     @product = Product.new
+    @product.photos.build
 
     respond_to do |format|
       format.html # new.html.erb

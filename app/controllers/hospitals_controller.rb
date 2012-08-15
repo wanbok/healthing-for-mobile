@@ -1,4 +1,6 @@
 class HospitalsController < ApplicationController
+  before_filter :authorize, :except => [:index, :show]
+
   # GET /hospitals
   # GET /hospitals.json
   def index
@@ -25,7 +27,7 @@ class HospitalsController < ApplicationController
   # GET /hospitals/new.json
   def new
     @hospital = Hospital.new
-    2.times { @hospital.photos.build }
+    3.times { @hospital.photos.build }
 
     respond_to do |format|
       format.html # new.html.erb

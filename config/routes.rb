@@ -15,6 +15,10 @@ HospitalAggregator::Application.routes.draw do
 
   match 'photos/:id/:style.:extension' => 'photos#image'
 
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  match 'logout' => 'sessions#destroy'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -64,7 +68,7 @@ HospitalAggregator::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'hospitals#index'
+  root :to => 'sessions#new'
 
   # See how all your routes lay out with "rake routes"
 
