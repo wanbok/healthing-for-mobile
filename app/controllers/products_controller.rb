@@ -41,9 +41,9 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
 
     respond_to do |format|
-      if @product.favorite_toggle(params[:udid])
+      if favorited = @product.favorite_toggle(params[:udid])
         format.html { redirect_to @product, notice: 'Favorite was successfully updated.' }
-        format.json { render json: {favorite_count: @product.favorite_count}, status: :ok }
+        format.json { render json: {favorite_count: @product.favorite_count, favorited: favorited == 1 ? true : false }, status: :ok }
       else
         format.html { render action: "show" }
         format.json { render json: @product.errors, status: :unprocessable_entity }

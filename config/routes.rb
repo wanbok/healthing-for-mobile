@@ -1,5 +1,7 @@
 HospitalAggregator::Application.routes.draw do
 
+  resources :admin_messages
+
   resources :products do
     member do
       post 'favorite'

@@ -59,10 +59,12 @@ class Product < ActiveRecord::Base
 			self.favorite_count -= 1
 			self.favorite_count = self.favorite_count < 0 ? 0 : self.favorite_count
 			self.save
+			0
 		else														# 이 상품을 찜하는 유저
 			self.users.push User.find_or_create_by_udid(udid)
 			self.favorite_count += 1
 			self.save
+			1
 		end
 	end
 

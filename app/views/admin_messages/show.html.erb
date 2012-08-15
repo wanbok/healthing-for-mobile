@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Message:</b>
+  <%= @admin_message.message %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_message_path(@admin_message) %> |
+<%= link_to 'Back', admin_messages_path %>
