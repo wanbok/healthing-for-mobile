@@ -9,12 +9,16 @@
 <body>
 
 <% [:notice, :info, :error].each do |key| %>
-   <% if flash[key] %>
-   <div class="<%= key %>" id="flash">
-     <%= flash[key] %>
-   </div>
-   <% end %>
- <% end %>
+  <% if flash[key] %>
+  	<div class="<%= key %>" id="flash">
+    	<%= flash[key] %>
+  	</div>
+  <% end %>
+<% end %>
+
+<div class="menu">
+	<a href="/hospitals">병원 목록</a> | <a href="/hospitals/new">병원 등록</a> | <a href="/products">상품 목록</a> | <a href="/products/new">상품 등록</a>
+</div>
 
 <%= yield %>
 
