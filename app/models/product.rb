@@ -70,7 +70,14 @@ class Product < ActiveRecord::Base
 
 	def self.search(search)
 	  if search
-	    joins(:hospital).where('products.name LIKE ? OR hospitals.name LIKE ?', "%#{search}%", "%#{search}%")
+	  	if ActiveRecord::Base::connection.is_a? (ActiveRecord::ConnectionAdapters::MysqlAdapter)
+      	find(:all,
+            :joins => "LEFT JOIN `hospitals` ON products.hospital_id = hospitals.id",
+            :select => "products.*, count(user_points.id)", :group => "products.id")
+      else
+       	joins(:hospital).where('products.name LIKE ? OR hospitals.name LIKE ?', "%#{search}%", "%#{search}%")
+      end
+    end
 	  else
 	    scoped
 	  end
