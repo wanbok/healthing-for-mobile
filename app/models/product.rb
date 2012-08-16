@@ -68,4 +68,12 @@ class Product < ActiveRecord::Base
 		end
 	end
 
+	def self.search(search)
+	  if search
+	    joins(:hospital).where('products.name LIKE ? OR hospitals.name LIKE ?', "%#{search}%", "%#{search}%")
+	  else
+	    scoped
+	  end
+	end
+
 end
