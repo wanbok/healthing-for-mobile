@@ -17,7 +17,12 @@
 <% end %>
 
 <div class="menu">
-	<a href="/hospitals">병원 목록</a> | <a href="/hospitals/new">병원 등록</a> | <a href="/products">상품 목록</a> | <a href="/products/new">상품 등록</a>
+	<a href="/hospitals">병원 목록</a> | <a href="/hospitals/new">병원 등록</a> | <a href="/products">상품 목록</a> | <a href="/products/new">상품 등록</a> | 
+	<% if admin? %>
+		<a href="/logout">Logout</a>
+	<% else %>
+		<a href="/login">Login as admin</a>
+	<% end %>
 </div>
 
 <%= yield %>
