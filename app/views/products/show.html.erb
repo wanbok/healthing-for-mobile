@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Hospital:</b>
-  <%= @product.hospital_id %>
+  <%= @product.hospital.name %>
 </p>
 
 <p>
@@ -14,6 +12,27 @@
   <b>Price:</b>
   <%= @product.price %>
 </p>
+
+<p>
+  <b>DC Rate:</b>
+  <%= @product.dc_rate %>
+</p>
+
+<p>
+  <b>Event start at:</b>
+  <%= @product.event_start_at %>
+</p>
+
+<p>
+  <b>Event end at:</b>
+  <%= @product.event_end_at %>
+</p>
+
+<% @product.photos.each do |photo| %>
+  <p>
+    <%= image_tag photo.medium_url %>
+  </p>
+<% end %>
 
 
 <%= link_to 'Edit', edit_product_path(@product) %> |

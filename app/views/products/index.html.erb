@@ -12,7 +12,7 @@
 
 <% @products.each do |product| %>
   <tr>
-    <td><%= product.hospital_id %></td>
+    <td><%= product.hospital.name %></td>
     <td><%= product.name %></td>
     <td><%= product.price %></td>
     <td><%= link_to 'Show', product %></td>

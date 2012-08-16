@@ -35,12 +35,12 @@
     <%= f.text_field :location_area %>
   </div>
   <div class="field">
-    <%= f.label :location_logitude %><br />
-    <%= f.text_field :location_logitude %>
-  </div>
-  <div class="field">
     <%= f.label :location_latitude %><br />
     <%= f.text_field :location_latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :location_logitude %><br />
+    <%= f.text_field :location_logitude %>
   </div>
   <div class="field">
     <%= f.label :tel_number %><br />
@@ -48,7 +48,7 @@
   </div>
   <div class="field">
     <%= f.label :department %><br />
-    <%= f.select_field :department %>
+    <%= f.select :department, options_for_select([["피부과", "피부과"], ["안과", "안과"], ["성형외과", "성형외과"], ["치과", "치과"]]) %>
   </div>
   <div class="field">
     <%= f.label :detail %><br />
