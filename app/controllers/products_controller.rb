@@ -54,8 +54,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-
-    if params[:section].blank?
+    if params[:section]
       @products = Product.all
     else
       today_as_datetime = date_to_datetime(Date.today)
@@ -72,13 +71,13 @@ class ProductsController < ApplicationController
       end
     end
 
-    unless params[:department].blank?
+    if params[:department]
       hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
       tmp_products = Product.where(hospital_id: hospital_ids)
       @products &= tmp_products
     end
 
-    unless params[:udid].blank?
+    if params[:udid]
       if user = User.where(udid: params[:udid]).first
         favorite_ids = user.products.map(&:_id)
         tmp_products = @products
@@ -93,9 +92,17 @@ class ProductsController < ApplicationController
       end
     end
 
+    if params[:page]
+      @products = @products.paginate(page: params[:page], per_page: 2)
+    end
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @products }
+      format.json { render json:
+        params[:page] ?
+          {products: @products, current_page: params[:page].to_i, total_page: @products.total_pages} :
+          {products: @products}
+      }
     end
   end
 
