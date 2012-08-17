@@ -29,9 +29,17 @@ class ProductsController < ApplicationController
       @products &= tmp_products
     end
 
+    if params[:page]
+      @products = @products.paginate(page: params[:page], per_page: params[:per_page] ? params[:per_page] : 20)
+    end
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @products }
+      format.json { render json:
+        params[:page] ?
+          {products: @products, current_page: params[:page].to_i, total_page: @products.total_pages} :
+          {products: @products}
+      }
     end
   end
 
