@@ -62,10 +62,12 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    if params[:section]
+
+    today_as_datetime = date_to_datetime(Date.today)
+
+    unless params[:section]
       @products = Product.all
     else
-      today_as_datetime = date_to_datetime(Date.today)
       tommorow_as_datetime = date_to_datetime(Date.today + 1)
       if params[:section] == "today"
         @products = Product.where(event_start_at: today_as_datetime...tommorow_as_datetime)
@@ -79,11 +81,14 @@ class ProductsController < ApplicationController
       end
     end
 
+    # TODO: 쿼리를 최적화 해야함
     if params[:department]
       hospital_ids = Hospital.where(department: params[:department]).map(&:_id)
       tmp_products = Product.where(hospital_id: hospital_ids)
       @products &= tmp_products
     end
+
+    @products = @products.sort_by { |t| [t[:event_end_at] < today_as_datetime ? 1 : 0, -t[:read_count], t[:id]] }
 
     if params[:udid]
       if user = User.where(udid: params[:udid]).first
