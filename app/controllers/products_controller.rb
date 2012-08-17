@@ -93,7 +93,7 @@ class ProductsController < ApplicationController
     end
 
     if params[:page]
-      @products = @products.paginate(page: params[:page], per_page: 2)
+      @products = @products.paginate(page: params[:page], per_page: params[:per_page] ? params[:per_page] : 20)
     end
 
     respond_to do |format|
