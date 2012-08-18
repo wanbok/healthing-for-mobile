@@ -74,7 +74,7 @@ class ProductsController < ApplicationController
       # else if params[:section] == "not_today"
       else
         unless params[:search].blank?
-          @products = Product.search(params[:search])
+          @products = Product.search(params[:search]).where("products.event_start_at < ?", today_as_datetime)
         else
           @products = Product.where("products.event_start_at < ?", today_as_datetime)
         end
