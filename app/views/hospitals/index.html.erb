@@ -18,7 +18,7 @@
 
 <% @hospitals.each do |hospital| %>
   <tr>
-    <td><%= image_tag hospital.photos[0].thumb_url %></td>
+    <td><%= image_tag hospital.photos[0].thumb_url if hospital.photos[0] %></td>
     <td><%= hospital.name %></td>
     <td><%= hospital.location_city %></td>
     <td><%= hospital.location_area %></td>

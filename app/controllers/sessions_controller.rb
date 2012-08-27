@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     session[:password] = params[:password]
     if admin?
     	flash[:notice] = "Successfully logged in"
-    	redirect_to hospitals_path
+    	redirect_to products_path
     else
     	flash[:notice] = "Failed to login"
     	redirect_to root_path
