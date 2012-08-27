@@ -12,7 +12,7 @@ class Photo < ActiveRecord::Base
       # 108x79    4g: 216x158
       detail: ["640", :png],
       medium: ["594x360#", :png],
-      thumb: ["108x79#", :png]
+      thumb: ["216x158#", :png]
     }
     
   validates_attachment :image, 
