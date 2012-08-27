@@ -32,6 +32,7 @@ class Hospital < ActiveRecord::Base
 						only: [],
 						methods:[
 							:image_url,
+							:detail_url,
 							:medium_url,
 							:thumb_url
 						]

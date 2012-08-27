@@ -33,6 +33,7 @@ class Product < ActiveRecord::Base
 								only: [:_id],
 								methods:[
 									:image_url,
+									:detail_url,
 									:medium_url,
 									:thumb_url
 								]
@@ -43,6 +44,7 @@ class Product < ActiveRecord::Base
 						only: [:_id],
 						methods:[
 							:image_url,
+							:detail_url,
 							:medium_url,
 							:thumb_url
 						]

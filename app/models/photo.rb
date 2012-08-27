@@ -7,8 +7,12 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image,
     styles: {
-      medium: ["300x300>", :png],
-      thumb: ["100x100>", :png]
+      # 640
+      # 302x187
+      # 108x79
+      detail: ["640", :png],
+      medium: ["302x187>", :png],
+      thumb: ["108x79>", :png]
     }
     
   validates_attachment :image, 
@@ -22,9 +26,13 @@ class Photo < ActiveRecord::Base
   	image.url
 	end
 
+  def detail_url
+    image.url(:detail)
+  end
+
   def medium_url
-  	image.url(:medium)
-	end
+    image.url(:medium)
+  end
 
   def thumb_url
   	image.url(:thumb)
