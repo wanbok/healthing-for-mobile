@@ -7,12 +7,12 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image,
     styles: {
-      # 640
-      # 302x187
-      # 108x79
+      # 320x0000  4g: 640x0000
+      # 297x180   4g: 594x360
+      # 108x79    4g: 216x158
       detail: ["640", :png],
-      medium: ["302x187>", :png],
-      thumb: ["108x79>", :png]
+      medium: ["594x360#", :png],
+      thumb: ["108x79#", :png]
     }
     
   validates_attachment :image, 
