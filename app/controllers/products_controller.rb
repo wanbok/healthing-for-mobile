@@ -88,7 +88,7 @@ class ProductsController < ApplicationController
       @products &= tmp_products
     end
 
-    @products = @products.sort_by { |t| [t[:event_end_at] < today_as_datetime ? 1 : 0, -t[:read_count], t[:id]] }
+    @products = @products.sort_by { |t| [(t[:event_end_at] < today_as_datetime) ? 1 : 0, -t[:read_count], t[:id]] }
 
     if params[:udid]
       if user = User.where(udid: params[:udid]).first
