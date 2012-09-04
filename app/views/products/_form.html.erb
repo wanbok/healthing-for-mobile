@@ -50,6 +50,10 @@ $(function() {
     <%= f.label :event_end_at %><br />
     <%= f.text_field :event_end_at %>
   </div>
+  <div class="field">
+    <%= f.label :hot, 'Hot event' %><br />
+    <%= f.check_box :hot %>
+  </div>
   <div class="images">
     <%= f.fields_for :photos do |builder| %>
       <%= render 'photos/photo_fields', :f => builder %>

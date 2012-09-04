@@ -28,6 +28,11 @@
   <%= @product.event_end_at %>
 </p>
 
+<p>
+  <b>Hot event:</b>
+  <%= @product.hot %>
+</p>
+
 <% @product.photos.each do |photo| %>
   <p>
     <%= image_tag photo.medium_url %>

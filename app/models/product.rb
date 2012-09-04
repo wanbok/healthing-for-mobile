@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
 	# field :favorite_count, type: Integer
 
 	attr_accessible :photos_attributes, :users, :hospital_id, :name, :price, :dc_rate,
-		:event_start_at, :event_end_at, :read_count
+		:event_start_at, :event_end_at, :hot, :read_count
 		
 	accepts_nested_attributes_for :photos,
 		reject_if: ->(attr){ attr[:image].blank? },

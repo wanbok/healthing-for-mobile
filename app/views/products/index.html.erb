@@ -8,6 +8,7 @@
     <th>Price</th>
     <th>Event Start At</th>
     <th>Event Ent At</th>
+    <th>Hot Event</th>
     <th></th>
     <th></th>
     <th></th>
@@ -21,6 +22,7 @@
     <td><%= product.price %></td>
     <td><%= product.event_start_at %></td>
     <td><%= product.event_end_at %></td>
+    <td><%= check_box 'product', :hot, {checked: product.hot, disabled: true} %></td>
     <td><%= link_to 'Show', product %></td>
     <td><%= link_to 'Edit', edit_product_path(product) %></td>
     <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>

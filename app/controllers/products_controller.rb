@@ -62,7 +62,6 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-
     today_as_datetime = date_to_datetime(Date.today)
 
     unless params[:section]
@@ -71,12 +70,21 @@ class ProductsController < ApplicationController
       tommorow_as_datetime = date_to_datetime(Date.today + 1)
       if params[:section] == "today"
         @products = Product.where(event_start_at: today_as_datetime...tommorow_as_datetime)
-      # else if params[:section] == "not_today"
-      else
+      elsif params[:section] == "not_today"
         unless params[:search].blank?
           @products = Product.search(params[:search]).where("products.event_start_at < ?", today_as_datetime)
         else
           @products = Product.where("products.event_start_at < ?", today_as_datetime)
+        end
+      elsif params[:section] == "hot"
+        # if hot is checked
+        @products = Product.where(hot: true)
+      else
+      # elsif params[:section] == "not_hot"
+        unless params[:search].blank?
+          @products = Product.search(params[:search]).where("products.event_end_at >= ? AND products.hot == ?", today_as_datetime, false)
+        else
+          @products = Product.where("products.event_end_at >= ? AND products.hot == ?", today_as_datetime, false)
         end
       end
     end
