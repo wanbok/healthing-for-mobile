@@ -82,9 +82,9 @@ class ProductsController < ApplicationController
       else
       # elsif params[:section] == "not_hot"
         unless params[:search].blank?
-          @products = Product.search(params[:search]).where("products.event_end_at >= ? AND products.hot == ?", today_as_datetime, false)
+          @products = Product.search(params[:search]).where("products.event_end_at >= ? AND products.hot = ?", today_as_datetime, false)
         else
-          @products = Product.where("products.event_end_at >= ? AND products.hot == ?", today_as_datetime, false)
+          @products = Product.where("products.event_end_at >= ? AND products.hot = ?", today_as_datetime, false)
         end
       end
     end
