@@ -69,12 +69,13 @@ class ProductsController < ApplicationController
     else
       tommorow_as_datetime = date_to_datetime(Date.today + 1)
       if params[:section] == "today"
-        @products = Product.where(event_start_at: today_as_datetime...tommorow_as_datetime)
+        # @products = Product.where(event_start_at: today_as_datetime...tommorow_as_datetime)
+        @products = Product.where("products.event_start_at >= ? AND products.event_start_at < ? AND products.show = ?", today_as_datetime, tommorow_as_datetime, true)
       elsif params[:section] == "not_today"
         unless params[:search].blank?
-          @products = Product.search(params[:search]).where("products.event_start_at < ?", today_as_datetime)
+          @products = Product.search(params[:search]).where("products.event_start_at < ? AND products.show = ?", today_as_datetime, true)
         else
-          @products = Product.where("products.event_start_at < ?", today_as_datetime)
+          @products = Product.where("products.event_start_at < ? AND products.show = ?", today_as_datetime, true)
         end
       elsif params[:section] == "hot"
         # if hot is checked
@@ -82,9 +83,9 @@ class ProductsController < ApplicationController
       else
       # elsif params[:section] == "not_hot"
         unless params[:search].blank?
-          @products = Product.search(params[:search]).where("products.event_end_at >= ? AND products.hot = ?", today_as_datetime, false)
+          @products = Product.search(params[:search]).where("products.event_end_at >= ? AND products.hot = ? AND products.show = ?", today_as_datetime, false, true)
         else
-          @products = Product.where("products.event_end_at >= ? AND products.hot = ?", today_as_datetime, false)
+          @products = Product.where("products.event_end_at >= ? AND products.hot = ? AND products.show = ?", today_as_datetime, false, true)
         end
       end
     end

@@ -33,6 +33,11 @@
   <%= @product.hot %>
 </p>
 
+<p>
+  <b>Showing event:</b>
+  <%= @product.hot %>
+</p>
+
 <% @product.photos.each do |photo| %>
   <p>
     <%= image_tag photo.medium_url %>

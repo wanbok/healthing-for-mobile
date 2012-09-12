@@ -54,6 +54,10 @@ $(function() {
     <%= f.label :hot, 'Hot event' %><br />
     <%= f.check_box :hot %>
   </div>
+  <div class="field">
+    <%= f.label :show, 'Showing event' %><br />
+    <%= f.check_box :show %>
+  </div>
   <div class="images">
     <%= f.fields_for :photos do |builder| %>
       <%= render 'photos/photo_fields', :f => builder %>
