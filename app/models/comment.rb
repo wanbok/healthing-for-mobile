@@ -10,4 +10,12 @@ class Comment < ActiveRecord::Base
 	validates :text, length: { in: 1...300 }
 
   attr_accessible :user_id, :commentable_id, :commentable_type, :text
+
+	def as_json(options={})
+		super(
+			{
+				include: :comments,
+			}.merge(options)
+		)
+	end
 end

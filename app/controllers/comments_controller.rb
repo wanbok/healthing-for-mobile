@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: { comments: @comments == [] ? nil : @comments } }
+      format.json { render json: { comments: @comments } }
     end
   end
 
@@ -26,13 +26,13 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html {
           flash[:notice] = 'Comment was successfully created.'
-          redirect_to @commentable
+          redirect_to id: nil
         }
         format.json { render json: @comment, status: :created, location: @comment }
       else
         format.html { 
           flash[:notice] = 'Comment was failed to create.'
-          redirect_to @commentable
+          redirect_to id: nil
         }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
