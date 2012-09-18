@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_filter :authorize, :only => [:destroy]
   # GET /comments
   # GET /comments.json
   def index
@@ -25,13 +26,13 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html {
           flash[:notice] = 'Comment was successfully created.'
-          redirect_to id: nil
+          redirect_to @commentable
         }
         format.json { render json: @comment, status: :created, location: @comment }
       else
         format.html { 
           flash[:notice] = 'Comment was failed to create.'
-          redirect_to id: nil
+          redirect_to @commentable
         }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -42,10 +43,16 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment = Comment.find(params[:id])
+
+    @commentable = @comment.commentable
+
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html {
+        flash[:notice] = 'Comment was successfully deleted.'
+        redirect_to @commentable
+      }
       format.json { head :no_content }
     end
   end

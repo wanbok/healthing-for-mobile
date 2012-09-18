@@ -4,6 +4,7 @@
   <div class="comment">
     <%= comment.text %>
     <%= link_to "답글달기", comment_comments_path(comment) %>
+    <%= link_to "X", comment, method: :delete, data: { confirm: 'Are you sure?' } if admin? %>
     <% for comment_by_admin in comment.comments %>
       <%=simple_format "&nbsp;> #{comment_by_admin.text}" %>
     <% end %>
