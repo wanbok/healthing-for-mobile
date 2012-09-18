@@ -1,5 +1,9 @@
 HospitalAggregator::Application.routes.draw do
 
+  resources :comments do
+    resources :comments
+  end
+
   resources :admin_messages
 
   resources :products do
@@ -9,10 +13,12 @@ HospitalAggregator::Application.routes.draw do
     collection do
       get 'favorites'
     end
+    resources :comments
   end
 
   resources :hospitals do
     resources :products
+    resources :comments
   end
 
   match 'photos/:id/:style.:extension' => 'photos#image'

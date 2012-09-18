@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
 
 	belongs_to :hospital
 	has_many :photos, dependent: :destroy
+	has_many :comments, as: :commentable, dependent: :destroy
   has_and_belongs_to_many :users
 	
 	# field :name, type: String
@@ -14,7 +15,7 @@ class Product < ActiveRecord::Base
 	# field :favorite_count, type: Integer
 
 	attr_accessible :photos_attributes, :users, :hospital_id, :name, :price, :dc_rate,
-		:event_start_at, :event_end_at, :read_count, :hot, :show
+		:event_start_at, :event_end_at, :read_count, :hot, :show, :comments
 		
 	accepts_nested_attributes_for :photos,
 		reject_if: ->(attr){ attr[:image].blank? },
@@ -48,8 +49,11 @@ class Product < ActiveRecord::Base
 							:medium_url,
 							:thumb_url
 						]
-					}
-				}
+					},
+				},
+				methods: [
+					:comments_count,
+				],
 			}.merge(options)
 		)
 	end
@@ -76,6 +80,10 @@ class Product < ActiveRecord::Base
 	  else
 	    scoped
 	  end
+	end
+
+	def comments_count
+		self.comments.count
 	end
 
 end

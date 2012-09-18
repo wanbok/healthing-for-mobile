@@ -1,0 +1,23 @@
+<h2>Comments</h2>
+<div id="comments">
+<% for comment in comments %>
+  <div class="comment">
+    <%= comment.text %>
+    <%= link_to "답글달기", comment_comments_path(comment) %>
+    <% for comment_by_admin in comment.comments %>
+      <%=simple_format "&nbsp;> #{comment_by_admin.text}" %>
+    <% end %>
+  </div>
+<% end %>
+</div>
+
+
+<h3>New Comment</h3>
+
+<%= form_for [commentable, Comment.new] do |f| %>
+  <p>
+    <%= f.label :text %><br />
+    <%= f.text_area :text %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

@@ -1,3 +1,4 @@
+
 <p>
   <b>Hospital:</b>
   <%= @product.hospital.name %>
@@ -44,6 +45,7 @@
   </p>
 <% end %>
 
-
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
+
+<%= render partial: 'comments/comments', locals: { comments: @product.comments, commentable: @product } %>
