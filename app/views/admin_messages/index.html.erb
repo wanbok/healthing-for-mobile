@@ -3,6 +3,8 @@
 <table>
   <tr>
     <th>Message</th>
+    <th>Version</th>
+    <th>Download URL</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,6 +13,8 @@
 <% @admin_messages.each do |admin_message| %>
   <tr>
     <td><%= admin_message.message %></td>
+    <td><%= admin_message.version %></td>
+    <td><%= admin_message.download_url %></td>
     <td><%= link_to 'Show', admin_message %></td>
     <td><%= link_to 'Edit', edit_admin_message_path(admin_message) %></td>
     <td><%= link_to 'Destroy', admin_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>

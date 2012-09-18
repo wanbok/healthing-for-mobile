@@ -1,3 +1,3 @@
 class AdminMessage < ActiveRecord::Base
-  attr_accessible :message
+  attr_accessible :message, :version, :download_url
 end

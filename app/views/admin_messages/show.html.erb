@@ -4,6 +4,14 @@
   <b>Message:</b>
   <%= @admin_message.message %>
 </p>
+<p>
+  <b>Version:</b>
+  <%= @admin_message.version %>
+</p>
+<p>
+  <b>Download URL:</b>
+  <%= @admin_message.download_url %>
+</p>
 
 
 <%= link_to 'Edit', edit_admin_message_path(@admin_message) %> |

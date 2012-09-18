@@ -1,4 +1,4 @@
-CREATE TABLE "admin_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE TABLE "admin_messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "message" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "version" varchar(255) DEFAULT NULL, "download_url" varchar(255) DEFAULT NULL);
 CREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "commentable_id" integer, "commentable_type" varchar(255), "text" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE TABLE "hospitals" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "location_city" varchar(255), "location_area" varchar(255), "location_latitude" float, "location_logitude" float, "tel_number" varchar(255), "department" varchar(255), "detail" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE TABLE "photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "hospital_id" integer, "product_id" integer, "image_file_name" varchar(255), "image_content_type" varchar(255), "image_file_size" integer, "image_updated_at" datetime);
@@ -16,3 +16,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120904110512');
 INSERT INTO schema_migrations (version) VALUES ('20120912075720');
 
 INSERT INTO schema_migrations (version) VALUES ('20120917071442');
+
+INSERT INTO schema_migrations (version) VALUES ('20120918072623');

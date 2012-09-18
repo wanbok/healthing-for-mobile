@@ -6,7 +6,7 @@ class AdminMessagesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: {message: @admin_messages.first.message} }
+      format.json { render json: @admin_messages.first }
     end
   end
 
