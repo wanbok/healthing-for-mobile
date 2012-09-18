@@ -15,15 +15,29 @@ class CommentsController < ApplicationController
     end
   end
 
+  def show
+    @commentable = find_commentable
+    redirect_to @commentable ? @commentable : products_path
+  end
+
   # POST /comments
   # POST /comments.json
   def create
     @commentable = find_commentable
-    @comment = @commentable.comments.build(params['comment'])
-    @comment.user_id = User.find_or_create_by_udid(params['udid'])
+    @comment = nil
+    unless @commentable.blank?
+      @comment = @commentable.comments.build(params['comment'])
+      @comment.user_id = User.find_or_create_by_udid(params['udid'])
+    end
 
     respond_to do |format|
-      if @comment.save
+      if @comment.blank?
+        format.html {
+          flash[:notice] = 'Comment can\'t be created without commentable(like parents).'
+          redirect_to id: nil
+        }
+        format.json { render json: {errors: 'Comment can\'t be created without commentable(like parents).'}, status: :unprocessable_entity }
+      elsif @comment.save
         format.html {
           flash[:notice] = 'Comment was successfully created.'
           redirect_to id: nil
