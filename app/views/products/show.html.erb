@@ -20,6 +20,11 @@
 </p>
 
 <p>
+  <b>라벨:</b>
+  <%= @product.label %>
+</p>
+
+<p>
   <b>Event start at:</b>
   <%= @product.event_start_at %>
 </p>
@@ -37,6 +42,11 @@
 <p>
   <b>Showing event:</b>
   <%= @product.hot %>
+</p>
+
+<p>
+  <b>추가 검색어:</b>
+  <%= @product.search_word %>
 </p>
 
 <% @product.photos.each do |photo| %>

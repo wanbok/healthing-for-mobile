@@ -5,17 +5,9 @@ class Product < ActiveRecord::Base
 	has_many :photos, dependent: :destroy
 	has_many :comments, as: :commentable, dependent: :destroy
   has_and_belongs_to_many :users
-	
-	# field :name, type: String
-	# field :price, type: Integer
-	# field :dc_rate, type: Float
-	# field :event_start_at, type: DateTime
-	# field :event_end_at, type: DateTime
-	# field :read_count, type: Integer
-	# field :favorite_count, type: Integer
 
 	attr_accessible :photos_attributes, :users, :hospital_id, :name, :price, :dc_rate,
-		:event_start_at, :event_end_at, :read_count, :hot, :show, :comments
+		:event_start_at, :event_end_at, :read_count, :hot, :show, :comments, :search_word, :label
 		
 	accepts_nested_attributes_for :photos,
 		reject_if: ->(attr){ attr[:image].blank? },
@@ -76,7 +68,7 @@ class Product < ActiveRecord::Base
 
 	def self.search(search)
 	  if search
-      select("DISTINCT products.*").joins(:hospital).where('products.name LIKE ? OR hospitals.name LIKE ?', "%#{search}%", "%#{search}%")
+      select("DISTINCT products.*").joins(:hospital).where('products.name LIKE ? OR products.search_word LIKE ? OR hospitals.name LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")
 	  else
 	    scoped
 	  end
