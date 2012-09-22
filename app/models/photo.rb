@@ -18,7 +18,7 @@ class Photo < ActiveRecord::Base
   validates_attachment :image, 
   	presence: true,
   	content_type: { content_type: ["image/png", "image/jpeg"] },
-  	size: { less_than: 10.megabytes }
+  	# size: { less_than: 10.megabytes }
 
   attr_accessible :image, :hospital_id, :product_id
   
