@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
     photo = Photo.find(params[:id])
     style = params[:style] ? params[:style] : 'original'
     send_file photo.image.path(style),
-      :type => photo.image_content_type
+      type: photo.image_content_type,
+      disposition: 'inline'
   end
 end
